@@ -1,5 +1,8 @@
 import wave
+from pydub import AudioSegment
 
+
+#bigger file, less bits
 def wav_to_bytes(file_path):
     with wave.open(file_path, 'rb') as wave_file:
         #pobierz parametry .wav
@@ -13,11 +16,19 @@ def wav_to_bytes(file_path):
 
     return frames
 
+#smaller file, compression makes more bits then
+def mp3_to_bytes(file_path):
+    audio = AudioSegment.from_mp3(file_path)
+    audio_bytes = audio.raw_data
+    return audio_bytes
+
 #path
 wav_file_path = '../samples/wow.wav'
+mp3_file_path = '../samples/wow.mp3'
 
 #conversion
-audio_bytes = wav_to_bytes(wav_file_path)
+# audio_bytes = wav_to_bytes(wav_file_path)
+audio_bytes = mp3_to_bytes(mp3_file_path)
 
 def bytes_to_bits(byte_string):
     bits = []
@@ -31,6 +42,6 @@ bit_string = bytes_to_bits(audio_bytes) #all bytes
 for index, byte_bits in enumerate(bit_string):
     print(f"Bajt {index}: {byte_bits}")
 
-#100bajtow nie zkonwertowane
+#pierwsze 100bajtow nie zkonwertowane (w postaci szesnatskowej)
 print(audio_bytes[:100])
-print("dlugosc ciągu bitów:", len(bytes_to_bits(audio_bytes)))
+print("dlugosc ciągu bajtów:", len(bytes_to_bits(audio_bytes)))
