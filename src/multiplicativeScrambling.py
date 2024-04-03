@@ -5,8 +5,7 @@ def generate_sequence(length):
     sequence = ''.join(random.choice(['0', '1']) for _ in range(length))
     return sequence
 
-bits_key = generate_sequence(100)
-print("Klucz szyfrowania: ",bits_key)
+
 def binary_multiplication(binary_num1, binary_num2):
     """
     Funkcja mnożąca dwie liczby binarne.
@@ -41,6 +40,7 @@ def binary_addition(binary_num1, binary_num2):
     carry = 0
 
     for i in range(len(binary_num1) - 1, -1, -1):
+        print(i)
         if i >= len(binary_num1) - len(binary_num2):
             j = i - (len(binary_num1) - len(binary_num2))
             temp_sum = int(binary_num1[i]) + int(binary_num2[j]) + carry
@@ -56,7 +56,7 @@ def binary_addition(binary_num1, binary_num2):
     return result
 
 def scramble_bits(bit_string):
-    scrambled_bits = binary_multiplication(bit_string, bits_key)
+    scrambled_bits = binary_addition(bit_string, bits_key)
     return scrambled_bits
 
 # tu można dodać ścieżkę do pliku audio
@@ -71,21 +71,26 @@ elif file_path.endswith('.mp3'):
 else:
     raise ValueError("Niewspierany format pliku")
 
+
+
 # konwersja bajtów na bity i scramblowanie
 bit_string = bytes_to_bits(audio_bytes)
-take_first_100 = bit_string[:100]
+bits_key = generate_sequence(len(bit_string))
+print("Klucz szyfrowania: ",bits_key[:100])
+#take_first_100 = bit_string[:100]
 # bit_string = '010101010'
-scrambled_bit_string = scramble_bits(take_first_100)
-
-print("Oryginalny ciąg bitów:", take_first_100)  # pokaż pierwsze 100 bitów ciągu wejściowego
-print("Scrambled ciąg bitów:", scrambled_bit_string) # pokaż pierwsze 100 bitów ciągu wyjściowego
+scrambled_bit_string = scramble_bits(bit_string)
 
 
+print("Oryginalny ciąg bitów:", bit_string[:100])  # pokaż pierwsze 100 bitów ciągu wejściowego
+print("Scrambled ciąg bitów:", scrambled_bit_string[:100]) # pokaż pierwsze 100 bitów ciągu wyjściowego
 
-#Do testowania mnożenia dwóch ciągów bitów
-# Przykładowe dane wejściowe
-# binary_num1 = '101000001111000'
-# binary_num2 = '110100001111000'
+
+#
+# #Do testowania mnożenia dwóch ciągów bitów
+# #Przykładowe dane wejściowe
+# binary_num1 = '10100101101001' #CIĄG DO SCRAMBLINGU
+# binary_num2 = '110100001111000' # KLUCZ
 #
 # # Wywołanie funkcji mnożenia
 # result = binary_multiplication(binary_num1, binary_num2)
