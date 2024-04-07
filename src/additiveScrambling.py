@@ -4,22 +4,21 @@ from fromFileToBit import wav_to_bytes, mp3_to_bytes, bytes_to_bits
 # funkcja generująca losowy ciąg bitów o długości ciągu wejściowego
 def generate_sequence(length):
     sequence = ''.join(random.choice(['0', '1']) for _ in range(length))
-    print("Pierwsze 100 bitów ciągu pseudolosowego:", sequence[:100])
+    print("Pierwsze 100 bitów ciągu losowego:", sequence[:100])
     return sequence
 
 # funckja wykonująca operację xor na dwóch ciągach bitów
-def xor_bit_strings(bit_string1, bit_string2):
+def xor_strings(bit_string1, bit_string2):
     result = []
-
     for i in range(len(bit_string1)):
-        result_bit = str(int(bit_string1[i]) ^ int(bit_string2[i]))
-        result.append(result_bit)
+        xor_result = str(int(bit_string1[i]) ^ int(bit_string2[i]))
+        result.append(xor_result)
 
     return ''.join(result)
 
 def scramble_bits(bit_string):
-    pseudorandom_sequence = generate_sequence(len(bit_string))
-    scrambled_bits = xor_bit_strings(bit_string, pseudorandom_sequence)
+    random_sequence = generate_sequence(len(bit_string))
+    scrambled_bits = xor_strings(bit_string, random_sequence)
     return scrambled_bits
 
 
@@ -37,9 +36,8 @@ else:
 
 # konwersja bajtów na bity i scramblowanie
 bit_string = bytes_to_bits(audio_bytes)
-# bit_string = '010101010'
 scrambled_bit_string = scramble_bits(bit_string)
 
 # wyniki
 print("Oryginalny ciąg bitów:", bit_string[:100])  # pokaż pierwsze 100 bitów ciągu wejściowego
-print("Scrambled ciąg bitów:", scrambled_bit_string[:100]) # pokaż pierwsze 100 bitów ciągu wyjściowego
+print("Ciąg bitów po scramblingu:", scrambled_bit_string[:100]) # pokaż pierwsze 100 bitów ciągu wyjściowego
