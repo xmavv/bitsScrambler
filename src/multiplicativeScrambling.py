@@ -6,25 +6,6 @@ def generate_sequence(length):
     return sequence
 
 
-def binary_multiplication(binary_num1, binary_num2):
-    """
-    Funkcja mnożąca dwie liczby binarne.
-
-    Args:
-    binary_num1 (str): Pierwsza liczba binarna.
-    binary_num2 (str): Druga liczba binarna.
-
-    Returns:
-    str: Wynik mnożenia w postaci binarnej.
-    """
-    result = '0' * (len(binary_num1) + len(binary_num2))  # Inicjalizacja wyniku jako ciąg zer
-
-    for i in range(len(binary_num2) - 1, -1, -1):
-        if binary_num2[i] == '1':
-            result = binary_addition(result, binary_num1 + '0' * (len(binary_num2) - 1 - i))
-
-    return result
-
 def binary_addition(binary_num1, binary_num2):
     """
     Funkcja dodająca dwie liczby binarne.
@@ -40,7 +21,6 @@ def binary_addition(binary_num1, binary_num2):
     carry = 0
 
     for i in range(len(binary_num1) - 1, -1, -1):
-        print(i)
         if i >= len(binary_num1) - len(binary_num2):
             j = i - (len(binary_num1) - len(binary_num2))
             temp_sum = int(binary_num1[i]) + int(binary_num2[j]) + carry
@@ -55,7 +35,7 @@ def binary_addition(binary_num1, binary_num2):
 
     return result
 
-def scramble_bits(bit_string):
+def scramble_bits(bit_string, bits_key):
     scrambled_bits = binary_addition(bit_string, bits_key)
     return scrambled_bits
 
@@ -73,7 +53,7 @@ else:
 
 
 
-# konwersja bajtów na bity i scramblowanie
+#konwersja bajtów na bity i scramblowanie
 bit_string = bytes_to_bits(audio_bytes)
 bits_key = generate_sequence(len(bit_string))
 print("Klucz szyfrowania: ",bits_key[:100])
@@ -86,12 +66,60 @@ print("Oryginalny ciąg bitów:", bit_string[:100])  # pokaż pierwsze 100 bitó
 print("Scrambled ciąg bitów:", scrambled_bit_string[:100]) # pokaż pierwsze 100 bitów ciągu wyjściowego
 
 
-#
-# #Do testowania mnożenia dwóch ciągów bitów
-# #Przykładowe dane wejściowe
-# binary_num1 = '10100101101001' #CIĄG DO SCRAMBLINGU
-# binary_num2 = '110100001111000' # KLUCZ
-#
-# # Wywołanie funkcji mnożenia
-# result = binary_multiplication(binary_num1, binary_num2)
-# print("Wynik mnożenia:", result)
+def subtract_binary(bin1, bin2):
+    # Uzyskaj długość obu liczb binarnych
+    len1 = len(bin1)
+    len2 = len(bin2)
+
+    # Uzyskaj maksymalną długość dla wyniku
+    max_len = max(len1, len2)
+
+    # Uzupełnij liczby zerami z lewej strony, jeśli są krótsze niż maksymalna długość
+    bin1 = bin1.zfill(max_len)
+    bin2 = bin2.zfill(max_len)
+
+    # Przekształć ciągi binarne w listy intów
+    num1 = [int(x) for x in bin1]
+    num2 = [int(x) for x in bin2]
+
+    # Odejmowanie binarne
+    result = []
+    borrow = 0
+
+    for i in range(max_len - 1, -1, -1):
+        diff = num1[i] - num2[i] - borrow
+
+        if diff < 0:
+            diff += 2
+            borrow = 1
+        else:
+            borrow = 0
+
+        result.insert(0, diff)
+
+    # Jeśli jest zapożyczenie na najbardziej znaczącym bicie, oznacza to, że wynik jest ujemny
+    if borrow == 1:
+        return "Wynik ujemny, nie można odejmować."
+
+    # Usuń wiodące zera z wyniku
+    result = ''.join(map(str, result))
+
+    # Jeśli wynik jest pusty (0), zwróć 0
+    if not result:
+        return "0"
+
+    return result
+
+
+
+
+#   TESTOWANIE KODOWANIA I DEKODOWANIA
+#KODOWANIE
+binary_num1 = '00000000000010100101101001' #CIĄG DO SCRAMBLINGU
+binary_num2 = '11010010101110100001111000' # KLUCZ
+result = binary_addition(binary_num1, binary_num2)
+print("Wynik dodawania:", result)
+print()
+#DEKODOWANIE I PORÓWNANIE
+print("Wynik odejmowania:", subtract_binary(result, binary_num2))
+print("Ciąg do scramblingu:", binary_num1)
