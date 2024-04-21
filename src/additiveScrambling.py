@@ -28,7 +28,7 @@ def scramble_bits(bit_string):
 
 # wszystko pod tym komentarzem można umieścić w osbnym pliku z menu jakimś
 # tu można dodać ścieżkę do pliku audio
-file_path = '../samples/wow.wav'
+file_path = '../samples/input/wow.wav'
 # file_path = '../samples/wow.mp3'
 
 # wybór odpowiedniej funkcji konwersji na podstawie rozszerzenia pliku

@@ -40,7 +40,7 @@ def scramble_bits(bit_string, bits_key):
     return scrambled_bits
 
 # tu można dodać ścieżkę do pliku audio
-file_path = '../samples/wow.wav'
+file_path = '../samples/input/wow.wav'
 # file_path = '../samples/wow.mp3'
 
 # wybór odpowiedniej funkcji konwersji na podstawie rozszerzenia pliku
