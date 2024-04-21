@@ -1,42 +1,28 @@
-def subtract_binary(bin1, bin2):
-    len1 = len(bin1)
-    len2 = len(bin2)
 
-    max_len = max(len1, len2)
+#Funkcja do przesuwania wszystkich bitów w prawo w rejestrze i dodawanie nowego bitu na początek
+def moveRegister(newBit, _register):
+    for i in range(len(_register)-2,-1,-1):
+        _register[i +1] = _register[i]
+    _register[0] = newBit
+    return _register
 
-    #uzupelnia zerami gdyby ciagi mialy rozna dlugosc
-    bin1 = bin1.zfill(max_len)
-    bin2 = bin2.zfill(max_len)
+def xorBits(bit1, bit2):
+    if bit1 == bit2:
+        return '0'
+    return '1'
 
-    num1 = [int(x) for x in bin1]
-    num2 = [int(x) for x in bin2]
+bitsToDescramble = "110111001"
+multiplicativeBits = [2,4] #To trzeba znać do descramblingu
+register = ['0','0','0','0','0'] #wyzerowany rejestr przed startem
 
-    result = []
-    borrow = 0
+descrambledBits = ''
 
-    for i in range(max_len - 1, -1, -1):
-        diff = num1[i] - num2[i] - borrow
+for bit in bitsToDescramble:
+    xorA = xorBits(register[multiplicativeBits[0]], register[multiplicativeBits[1]])  # xorujemy bity w rejestrze na pozycjach zapisanych w multiplicativeBits
+    xorB = xorBits(xorA, bit)  # xorujemy wynik pierwszego xorowania i kolejnego bitu do zakodowania
 
-        if diff < 0:
-            diff += 2
-            borrow = 1
-        else:
-            borrow = 0
+    print("Reg: ", register, "   ", "bit: ", bit, "  ", "xorA: ", xorA, "    ", "xorB=output: ", xorB)
+    descrambledBits += xorB  # xorB to tez output
+    register = moveRegister(bit,register)  # przesuwamy rejestr i dodajemy na początek rejestru bit, który wprowadziliśmy
 
-        result.insert(0, diff)
-
-    # jesli jest zapozyczenie na najbardziej znaczacym bicie, oznacza to, że wynik jest ujemny
-    if borrow == 1:
-        return "Wynik ujemny, nie można odejmować."
-
-    result = ''.join(map(str, result))
-
-    # jak wynik jest pusty (0), zwróć 0
-    if not result:
-        return "0"
-
-    return result
-
-def descramble_bits(scrambled_bits_string, bits_key):
-    result = subtract_binary(scrambled_bits_string, bits_key)
-    return result
+print(descrambledBits)

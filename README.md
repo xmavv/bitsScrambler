@@ -36,7 +36,7 @@ Additive method works...
 
 Multiplicative method works...
 
-(mamy juz wczesniej podany rejestr, natomiast ten rejestr oddzialuje z naszym ciagiem bitow ktory podajemy, wiec za kazdym razem jest inny, dla roznych ciogow bitow. tutaj jakis algorytm ktory tworzy nam ten klucz, np bierzemy bity co drugi i jakos laczymy z tym kluczem ktory byl w rejestrze. wowczas mamy ten klucz i teraz znowu wykonujemy operacje xor na tym kluczu i naszym ciagu bitow, aby dalo sie go odscramblowac, jest to metoda synchroniczna, klucz z rejestru wchodzi przez podany algorytm w nasz orginalny ciag bitow)
+(mamy juz wczesniej podany rejestr, natomiast ten rejestr oddzialuje z naszym ciagiem bitow ktory podajemy, wiec za kazdym razem jest inny, dla roznych ciągow bitow. tutaj jakis algorytm ktory tworzy nam ten klucz, np bierzemy bity co drugi i jakos laczymy z tym kluczem ktory byl w rejestrze. wowczas mamy ten klucz i teraz znowu wykonujemy operacje xor na tym kluczu i naszym ciagu bitow, aby dalo sie go odscramblowac, jest to metoda synchroniczna, klucz z rejestru wchodzi przez podany algorytm w nasz orginalny ciag bitow)
 
 ## Built with
 to run this app, You will need to download ffmpeg
