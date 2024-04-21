@@ -1,12 +1,11 @@
 import random
-from fromFileToBit import wav_to_bytes, mp3_to_bytes, bytes_to_bits
 from additiveDescrambling import descramble_bits
 
 
 # funkcja generująca losowy ciąg bitów o długości ciągu wejściowego
 def generate_sequence(length):
     sequence = ''.join(random.choice(['0', '1']) for _ in range(length))
-    print("Ciąg losowy:                 ", sequence[:100])
+    print("Ciąg losowy:                 ", sequence)
     return sequence
 
 
@@ -25,28 +24,14 @@ def scramble_bits(bit_string):
     scrambled_bits = xor_strings(bit_string, random_sequence)
     return scrambled_bits, random_sequence
 
-
-# wszystko pod tym komentarzem można umieścić w osbnym pliku z menu jakimś
-# tu można dodać ścieżkę do pliku audio
-file_path = '../samples/input/wow.wav'
-# file_path = '../samples/wow.mp3'
-
-# wybór odpowiedniej funkcji konwersji na podstawie rozszerzenia pliku
-if file_path.endswith('.wav'):
-    audio_bytes = wav_to_bytes(file_path)
-elif file_path.endswith('.mp3'):
-    audio_bytes = mp3_to_bytes(file_path)
-else:
-    raise ValueError("Niewspierany format pliku")
-
 # konwersja bajtów na bity i scramblowanie
-bit_string = bytes_to_bits(audio_bytes)
+bit_string = "0100001101111000101011100101010001101010001010111111000101010"
 scrambled_bit_string, random_sequence = scramble_bits(bit_string)
 
 # descramblowanie
 descrambled_bit_string = descramble_bits(scrambled_bit_string, random_sequence)
 
 # wyniki
-print("Oryginalny ciąg bitów:       ", bit_string[:100])  # pokaż pierwsze 100 bitów ciągu wejściowego
-print("Ciąg bitów po scramblingu:   ", scrambled_bit_string[:100]) # pokaż pierwsze 100 bitów ciągu wyjściowego
-print("Ciąg bitów po descramblingu: ", descrambled_bit_string[:100]) # pierwsze 100 bitów po descramblingu
+print("Oryginalny ciąg bitów:       ", bit_string)  # pokaż pierwsze 100 bitów ciągu wejściowego
+print("Ciąg bitów po scramblingu:   ", scrambled_bit_string) # pokaż pierwsze 100 bitów ciągu wyjściowego
+print("Ciąg bitów po descramblingu: ", descrambled_bit_string) # pierwsze 100 bitów po descramblingu

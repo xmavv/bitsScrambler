@@ -1,20 +1,16 @@
 def subtract_binary(bin1, bin2):
-    # Uzyskaj długość obu liczb binarnych
     len1 = len(bin1)
     len2 = len(bin2)
 
-    # Uzyskaj maksymalną długość dla wyniku
     max_len = max(len1, len2)
 
-    # Uzupełnij liczby zerami z lewej strony, jeśli są krótsze niż maksymalna długość
+    #uzupelnia zerami gdyby ciagi mialy rozna dlugosc
     bin1 = bin1.zfill(max_len)
     bin2 = bin2.zfill(max_len)
 
-    # Przekształć ciągi binarne w listy intów
     num1 = [int(x) for x in bin1]
     num2 = [int(x) for x in bin2]
 
-    # Odejmowanie binarne
     result = []
     borrow = 0
 
@@ -29,13 +25,13 @@ def subtract_binary(bin1, bin2):
 
         result.insert(0, diff)
 
-    # Jeśli jest zapożyczenie na najbardziej znaczącym bicie, oznacza to, że wynik jest ujemny
+    # jesli jest zapozyczenie na najbardziej znaczacym bicie, oznacza to, że wynik jest ujemny
     if borrow == 1:
         return "Wynik ujemny, nie można odejmować."
 
     result = ''.join(map(str, result))
 
-    # Jeśli wynik jest pusty (0), zwróć 0
+    # jak wynik jest pusty (0), zwróć 0
     if not result:
         return "0"
 
