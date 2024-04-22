@@ -9,15 +9,15 @@ def generate_sequence(length):
 
 # II metoda generowania - generowanie ciągu z rejestru
 def generate_lfsr_sequence(initial_state):
-    state = list(initial_state)  # stworzenie kopii initial_state
+    register = list(initial_state)  # generujemy rejestr z początkowym stanem initial_state
     generated_sequence = []  # tablica wynikowa
 
     # generowanie ciągu za pomocą rejestru przesuwającego o długości bit_string
     for i in range(len(bit_string)):
 
-        new_bit = state[0]^state[2]  # xor na określonych indeksach rejestru
+        new_bit = register[0]^register[2]  # xor na określonych indeksach rejestru
         generated_sequence.append(str(new_bit))  # dodanie bitu do nowego ciągu
-        state = [new_bit] + state[:-1]  # przesunięcie rejestru w prawo oraz dodanie nowego bitu z przodu
+        register = [new_bit] + register[:-1]  # przesunięcie rejestru w prawo oraz dodanie nowego bitu z przodu
 
     return ''.join(generated_sequence)
 
