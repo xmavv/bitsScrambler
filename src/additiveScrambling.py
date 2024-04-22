@@ -13,10 +13,10 @@ def generate_lfsr_sequence(initial_state):
     generated_sequence = []  # tablica wynikowa
 
     # generowanie ciągu za pomocą rejestru przesuwającego o długości bit_string
-    for _ in range(len(bit_string)):
+    for i in range(len(bit_string)):
 
         new_bit = state[0]^state[2]  # xor na określonych indeksach rejestru
-        generated_sequence.append(str(state[-1]))  # dodanie bitu, który wypadnie poza zakres do nowego ciągu
+        generated_sequence.append(str(new_bit))  # dodanie bitu do nowego ciągu
         state = [new_bit] + state[:-1]  # przesunięcie rejestru w prawo oraz dodanie nowego bitu z przodu
 
     return ''.join(generated_sequence)
