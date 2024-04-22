@@ -28,7 +28,7 @@ def bytes_to_bits(byte_string):
         bits.append(format(byte, '08b'))  # byte to bit, uzupelnia do 8 bitow w kazdej sekwencji
     return ''.join(bits)
 
-print(load_wav_file()) # to jest szesnastkowo tutaj bo lepiej to widac
+#print(load_wav_file()) # to jest szesnastkowo tutaj bo lepiej to widac
 # np. xff oznacza po prostu zapis szesnastkowy FF, czyli 1111 1111
 
 # example_data = b'\x00\x01\x02\x03\x04\x05'
