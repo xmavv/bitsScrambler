@@ -11,7 +11,7 @@ def xorBits(bit1, bit2):
         return '0'
     return '1'
 
-bitsToDescramble = "110111001"
+bitsToDescramble = "10110001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000011"
 multiplicativeBits = [2,4] #To trzeba znać do descramblingu
 register = ['0','0','0','0','0'] #wyzerowany rejestr przed startem
 
