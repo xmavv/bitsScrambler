@@ -15,14 +15,14 @@ bitsToDescramble = "110111001"
 multiplicativeBits = [2,4] #To trzeba znać do descramblingu
 register = ['0','0','0','0','0'] #wyzerowany rejestr przed startem
 
-descrambledBits = ''
+descrambledBits = []
 
 for bit in bitsToDescramble:
     xorA = xorBits(register[multiplicativeBits[0]], register[multiplicativeBits[1]])  # xorujemy bity w rejestrze na pozycjach zapisanych w multiplicativeBits
     xorB = xorBits(xorA, bit)  # xorujemy wynik pierwszego xorowania i kolejnego bitu do zakodowania
 
     print("Reg: ", register, "   ", "bit: ", bit, "  ", "xorA: ", xorA, "    ", "xorB=output: ", xorB)
-    descrambledBits += xorB  # xorB to tez output
+    descrambledBits.append(xorB)  # xorB to tez output
     register = moveRegister(bit,register)  # przesuwamy rejestr i dodajemy na początek rejestru bit, który wprowadziliśmy
 
 print(descrambledBits)

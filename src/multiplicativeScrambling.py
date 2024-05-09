@@ -14,7 +14,7 @@ bitsToScramble = "110000101"
 multiplicativeBits = [2,4] #Na tych dwóch pozycjach w rejestze xorujemy bity (licz od 0)
 register = ['0','0','0','0','0'] #wyzerowany rejestr przed startem
 
-scrambledBits = ''
+scrambledBits = []
 
 #Zobaczyć rysunek żeby ogarnąć o co chodzi
 for bit in bitsToScramble:
@@ -22,7 +22,7 @@ for bit in bitsToScramble:
     xorB = xorBits(xorA, bit)   #xorujemy wynik pierwszego xorowania i kolejnego bitu do zakodowania
 
     print("Reg: ",register,"   ","bit: ",bit,"  ", "xorA: ", xorA, "    ", "xorB=output: ", xorB)
-    scrambledBits += xorB #xorB to tez output
+    scrambledBits.append(xorB) #xorB to tez output
     register = moveRegister(bit,register) #przesuwamy rejestr i dodajemy na początek rejestru bit, który wprowadziliśmy
     # print(register)
 
