@@ -1,3 +1,6 @@
+from countRepetitions import countRepetitions
+import numpy as np
+import matplotlib.pyplot as plt
 
 def moveRegister(newBit, _register):
     for i in range(len(_register)-2,-1,-1):
@@ -10,7 +13,12 @@ def xorBits(bit1, bit2):
         return '0'
     return '1'
 
-bitsToScramble = "110000101"
+bitsToScramble = "001110000111110001101011010101101110000000000001010111111111110101010101011111111111110000000101101010101010101011111111111"
+toScramble = countRepetitions(bitsToScramble)
+
+plt.bar(list(toScramble.keys()), toScramble.values(), color='g')
+plt.show()
+
 multiplicativeBits = [2,4] #Na tych dwóch pozycjach w rejestze xorujemy bity (licz od 0)
 register = ['0','0','0','0','0'] #wyzerowany rejestr przed startem
 
@@ -27,7 +35,8 @@ for bit in bitsToScramble:
     # print(register)
 
 print(scrambledBits)
+strScrambledBits = "".join(scrambledBits)
+scrambled = countRepetitions(strScrambledBits)
 
-
-
-
+plt.bar(list(scrambled.keys()), scrambled.values(), color='g')
+plt.show()
