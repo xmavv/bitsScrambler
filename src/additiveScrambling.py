@@ -1,5 +1,8 @@
 import random
 from additiveDescrambling import descramble_bits
+from countRepetitions import countRepetitions
+import numpy as np
+import matplotlib.pyplot as plt
 
 
 # I metoda generowania - funkcja generująca losowy ciąg bitów o długości ciągu wejściowego
@@ -38,6 +41,10 @@ def scramble_bits(bit_string, random_sequence):
 # przykładowy ciąg do testów
 bit_string = "0100001101111000101011100101010001101010001010111111000101010"
 
+toScramble = countRepetitions(bit_string)
+plt.bar(list(toScramble.keys()), toScramble.values(), color='g')
+plt.show()
+
 print("\nI METODA - random")
 print("\nOryginalny ciąg bitów:                   ", bit_string)
 # generowanie ciągu losowego
@@ -45,6 +52,11 @@ random_sequence = generate_sequence(len(bit_string))
 print("Ciąg losowy (random):                    ", random_sequence)
 # scramblowanie
 scrambled_bit_string = scramble_bits(bit_string, random_sequence)
+
+scrambled_rand = countRepetitions(scrambled_bit_string)
+plt.bar(list(scrambled_rand.keys()), scrambled_rand.values(), color='g')
+plt.show()
+
 # descramblowanie
 descrambled_bit_string = descramble_bits(scrambled_bit_string, random_sequence)
 # wyniki
@@ -61,6 +73,11 @@ lfsr_sequence = generate_lfsr_sequence(initial_register)
 print("Ciąg z rejestru (LFSR):                  ", lfsr_sequence)
 # scramblowanie
 lfsr_scrambled_bit_string = scramble_bits(bit_string, lfsr_sequence)  # Scramblowanie z LFSR
+
+scrambled_lfsr = countRepetitions(lfsr_scrambled_bit_string)
+plt.bar(list(scrambled_lfsr.keys()), scrambled_lfsr.values(), color='g')
+plt.show()
+
 # descramblowanie
 descrambled_bit_string_lfsr = descramble_bits(lfsr_scrambled_bit_string, lfsr_sequence)
 # wyniki
