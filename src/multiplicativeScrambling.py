@@ -1,6 +1,7 @@
-from countRepetitions import countRepetitions
+from countRepetitions import countRepetitions, countPropability
 import numpy as np
 import matplotlib.pyplot as plt
+
 
 def moveRegister(newBit, _register):
     for i in range(len(_register)-2,-1,-1):
@@ -15,6 +16,8 @@ def xorBits(bit1, bit2):
 
 bitsToScramble = "001110000111110001101011010101101110000000000001010111111111110101010101011111111111110000000101101010101010101011111111111"
 toScramble = countRepetitions(bitsToScramble)
+print("Sekwencja przed scramblingiem")
+print("Bity zaklocajace stanowia " , countPropability(len(bitsToScramble),toScramble) , " % calej dlugosci sekwencji")
 
 plt.bar(list(toScramble.keys()), toScramble.values(), color='g')
 plt.show()
@@ -29,14 +32,18 @@ for bit in bitsToScramble:
     xorA = xorBits(register[multiplicativeBits[0]],register[multiplicativeBits[1]]) #xorujemy bity w rejestrze na pozycjach zapisanych w multiplicativeBits
     xorB = xorBits(xorA, bit)   #xorujemy wynik pierwszego xorowania i kolejnego bitu do zakodowania
 
-    print("Reg: ",register,"   ","bit: ",bit,"  ", "xorA: ", xorA, "    ", "xorB=output: ", xorB)
+    #print("Reg: ",register,"   ","bit: ",bit,"  ", "xorA: ", xorA, "    ", "xorB=output: ", xorB)
     scrambledBits.append(xorB) #xorB to tez output
     register = moveRegister(bit,register) #przesuwamy rejestr i dodajemy na początek rejestru bit, który wprowadziliśmy
     # print(register)
 
-print(scrambledBits)
 strScrambledBits = "".join(scrambledBits)
 scrambled = countRepetitions(strScrambledBits)
 
+print("Sekwencja po scramblingu")
+print("Bity zaklocajace stanowia " , countPropability(len(strScrambledBits),scrambled) , " % calej dlugosci sekwencji")
+
 plt.bar(list(scrambled.keys()), scrambled.values(), color='g')
 plt.show()
+
+
