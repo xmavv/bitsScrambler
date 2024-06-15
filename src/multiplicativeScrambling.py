@@ -1,4 +1,4 @@
-from countRepetitions import countRepetitions, countPropability
+from countRepetitions import countRepetitions, countProbabilityNew
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -17,7 +17,7 @@ def xorBits(bit1, bit2):
 bitsToScramble = "001110000111110001101011010101101110000000000001010111111111110101010101011111111111110000000101101010101010101011111111111"
 toScramble = countRepetitions(bitsToScramble)
 print("Sekwencja przed scramblingiem")
-print("Bity zaklocajace stanowia " , countPropability(len(bitsToScramble),toScramble) , " % calej dlugosci sekwencji")
+print("Bity zaklocajace stanowia ", countProbabilityNew(bitsToScramble), " % calej dlugosci sekwencji")
 
 plt.bar(list(toScramble.keys()), toScramble.values(), color='g')
 plt.show()
@@ -41,7 +41,7 @@ strScrambledBits = "".join(scrambledBits)
 scrambled = countRepetitions(strScrambledBits)
 
 print("Sekwencja po scramblingu")
-print("Bity zaklocajace stanowia " , countPropability(len(strScrambledBits),scrambled) , " % calej dlugosci sekwencji")
+print("Bity zaklocajace stanowia ", countProbabilityNew(strScrambledBits), " % calej dlugosci sekwencji")
 
 plt.bar(list(scrambled.keys()), scrambled.values(), color='g')
 plt.show()

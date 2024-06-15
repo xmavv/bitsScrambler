@@ -29,7 +29,7 @@ def simulateHitOrMiss(propability):
         return True
     return False
 
-def countPropabilityNew(bits):
+def countProbabilityNew(bits):
     packets = [] #pakiety danych, między którymi następuje synchronizacja
     #Tworzenie pakietów
     for i in range(0,len(bits) - PACKET_LEN ,PACKET_LEN):
@@ -75,9 +75,9 @@ def countPropabilityNew(bits):
 
     return disturbedBits
 
-randomSequence = generate_sequence(200)
+#randomSequence = generate_sequence(200)
 
-total = countPropabilityNew(randomSequence)
-print(total)
+#total = countPropabilityNew(randomSequence)
+#print(total)
 
 
