@@ -26,7 +26,7 @@ def load_wav_file():
 
 
 # save to the new WAV file
-def create_wav_file(data, channels=1, sample_width=2, frame_rate=44100, file_path='blagamdzialaj.wav'):
+def create_wav_file(data, channels=1, sample_width=2, frame_rate=44100, file_path='outputFile242424224423.wav'):
     with wave.open(file_path, 'wb') as wav_file:
         wav_file.setnchannels(channels)
         wav_file.setsampwidth(sample_width)
@@ -42,6 +42,7 @@ def bytes_to_bits(byte_string):
 
 
 CIAG_BITOW = load_wav_file()  # to jest szesnastkowo tutaj bo lepiej to widac
+
 
 # np. xff oznacza po prostu zapis szesnastkowy FF, czyli 1111 1111
 
@@ -62,29 +63,23 @@ def xorBits(bit1, bit2):
 
 
 bitsToScramble = CIAG_BITOW
+print(bitsToScramble[:100])
 multiplicativeBits = [2, 4]  #Na tych dwóch pozycjach w rejestze xorujemy bity (licz od 0)
 register = ['0', '0', '0', '0', '0']  #wyzerowany rejestr przed startem
 
-scrambledBits = ''
+scrambledBits = []
 
 #Zobaczyć rysunek żeby ogarnąć o co chodzi
-licznik = 0
 for bit in bitsToScramble:
-    print('scramblowanie    ', licznik / len(bitsToScramble))
-    licznik += 1
-    xorA = xorBits(register[multiplicativeBits[0]], register[
-        multiplicativeBits[1]])  #xorujemy bity w rejestrze na pozycjach zapisanych w multiplicativeBits
-    xorB = xorBits(xorA, bit)  #xorujemy wynik pierwszego xorowania i kolejnego bitu do zakodowania
+    xorA = xorBits(register[multiplicativeBits[0]],register[multiplicativeBits[1]]) #xorujemy bity w rejestrze na pozycjach zapisanych w multiplicativeBits
+    xorB = xorBits(xorA, bit)   #xorujemy wynik pierwszego xorowania i kolejnego bitu do zakodowania
 
-    # print("Reg: ",register,"   ","bit: ",bit,"  ", "xorA: ", xorA, "    ", "xorB=output: ", xorB)
-    scrambledBits += xorB  #xorB to tez output
-    register = moveRegister(xorB,
-                            register)  #przesuwamy rejestr i dodajemy na początek rejestru bit, który wprowadziliśmy
+    #print("Reg: ",register,"   ","bit: ",bit,"  ", "xorA: ", xorA, "    ", "xorB=output: ", xorB)
+    scrambledBits.append(xorB) #xorB to tez output
+    register = moveRegister(bit,register) #przesuwamy rejestr i dodajemy na początek rejestru bit, który wprowadziliśmy
     # print(register)
 
-
-# print(scrambledBits)
-
+strScrambledBits = "".join(scrambledBits)
 
 #Funkcja do przesuwania wszystkich bitów w prawo w rejestrze i dodawanie nowego bitu na początek
 def moveRegister(newBit, _register):
@@ -100,25 +95,22 @@ def xorBits(bit1, bit2):
     return '1'
 
 
-bitsToDescramble = scrambledBits
+bitsToDescramble = strScrambledBits
 multiplicativeBits = [2, 4]  #To trzeba znać do descramblingu
 register = ['0', '0', '0', '0', '0']  #wyzerowany rejestr przed startem
 
-descrambledBits = ''
-licznik = 0
+descrambledBits = []
+
 for bit in bitsToDescramble:
-    xorA = xorBits(register[multiplicativeBits[0]], register[
-        multiplicativeBits[1]])  # xorujemy bity w rejestrze na pozycjach zapisanych w multiplicativeBits
+    xorA = xorBits(register[multiplicativeBits[0]], register[multiplicativeBits[1]])  # xorujemy bity w rejestrze na pozycjach zapisanych w multiplicativeBits
     xorB = xorBits(xorA, bit)  # xorujemy wynik pierwszego xorowania i kolejnego bitu do zakodowania
-    print('descramblowanie    ', licznik / len(bitsToScramble))
-    licznik += 1
+
     # print("Reg: ", register, "   ", "bit: ", bit, "  ", "xorA: ", xorA, "    ", "xorB=output: ", xorB)
-    descrambledBits += xorB  # xorB to tez output
-    register = moveRegister(bit,
-                            register)  # przesuwamy rejestr i dodajemy na początek rejestru bit, który wprowadziliśmy
+    descrambledBits.append(xorB)  # xorB to tez output
+    register = moveRegister(bit,register)  # przesuwamy rejestr i dodajemy na początek rejestru bit, który wprowadziliśmy
 
-
-# print(descrambledBits)
+strDescrambledBits = "".join(descrambledBits)
+print(strDescrambledBits[:100])
 
 def binary_to_hex(binary_string):
     # Konwertujemy ciąg znaków binarnych na liczbę całkowitą
@@ -128,7 +120,7 @@ def binary_to_hex(binary_string):
     return hex_string
 
 
-finalBits = binary_to_hex(descrambledBits)
+finalBits = binary_to_hex(strDescrambledBits)
 finalByesObject = bytes.fromhex(finalBits)
 
 create_wav_file(finalByesObject)
