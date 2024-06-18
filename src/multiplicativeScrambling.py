@@ -16,7 +16,7 @@ def xorBits(bit1, bit2):
         return '0'
     return '1'
 
-
+#001110000111110001101011000000001010110111000000001010111110000000000111111010100000001010101111100000111111110000010110101010101010101100000000111111111
 bitsToScramble = "001110000111110001101011000000001010110111000000001010111110000000000111111010100000001010101111100000111111110000010110101010101010101100000000111111111"
                  #00111000011111000110101100000010101101110000000011101100000011011001011001001111101011111000000011111111000000001101001110101010101100000000111111111
 #Wyświetl symulację wystąpienia desynchronizacji bez użycia scramblera
@@ -25,7 +25,12 @@ print("\nPierwotna sekwencja: \n",Fore.CYAN + bitsToScramble)
 print(Fore.MAGENTA + "     Symulacja przesylania danych bez scramblingu    ")
 disturbedSeq = countProbabilityNew(bitsToScramble)
 
-plt.bar(list(toScramble.keys()), toScramble.values(), color='g')
+plt.bar(list(toScramble.values()), toScramble.keys(), color='g')
+plt.yticks(np.arange(min(toScramble.keys()),max(toScramble.keys())+1,1))
+plt.xticks(np.arange(0,max(toScramble.values())+1,1))
+plt.xlabel("Ilość wystąpień długości danej sekwencji")
+plt.ylabel("Długość danej sekwencji zer")
+plt.title("Histogram wystąpień sekwencji zer | Przed scramblowaniem")
 plt.show()
 
 #DANE DLA SCRAMBLINGU muszą być identyczne przy descramblingu
@@ -50,7 +55,12 @@ print(Fore.MAGENTA + "     Symulacja przesylania danych przy uzyciu scramblingu 
 print("Sekwencja poddana scramblingowi: ",Fore.CYAN + strScrambledBits)
 scrambled = countRepetitions(strScrambledBits)
 disturbedSeqScr = countProbabilityNew(strScrambledBits)
-plt.bar(list(scrambled.keys()), scrambled.values(), color='g')
+plt.bar(list(scrambled.values()), scrambled.keys(), color='g')
+plt.yticks(np.arange(min(scrambled.keys()),max(scrambled.keys())+1,1))
+plt.xticks(np.arange(0,max(scrambled.values())+1,1))
+plt.xlabel("Ilość wystąpień długości danej sekwencji")
+plt.ylabel("Długość danej sekwencji zer")
+plt.title("Histogram wystąpień sekwencji zer | Po scramblowaniu")
 plt.show()
 
 

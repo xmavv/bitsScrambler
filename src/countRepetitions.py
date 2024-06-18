@@ -13,7 +13,7 @@ def countRepetitions(sequence):
     countRep = {}
     sequence = sequence + 'x'
     for i in range(len(sequence)-1):
-        if sequence[i] == sequence[i + 1]:
+        if sequence[i] == sequence[i + 1] and sequence[i] == '0':
             count += 1
         else:
             if not (count in countRep):
@@ -21,6 +21,7 @@ def countRepetitions(sequence):
             else:
                 countRep[count] = countRep[count] + 1
             count = 1
+    countRep.pop(1)
     return countRep
 
 
