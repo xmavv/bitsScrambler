@@ -16,12 +16,14 @@ def xorBits(bit1, bit2):
         return '0'
     return '1'
 
-bitsToScramble = "00111000011111000110101100000010101101110000000010101111100000000001111110101010101011111000000011111111000000010110101010101010101100000000111111111"
-                 #00111000011111000110101100000010101101110000000010101111100000000001111110101010101011111000000011000110111001001111011111111010101100000000111111111
-#Wyświetl symulację wystąpienia desynchronizacji
+
+bitsToScramble = "001110000111110001101011000000001010110111000000001010111110000000000111111010100000001010101111100000111111110000010110101010101010101100000000111111111"
+                 #00111000011111000110101100000010101101110000000011101100000011011001011001001111101011111000000011111111000000001101001110101010101100000000111111111
+#Wyświetl symulację wystąpienia desynchronizacji bez użycia scramblera
 toScramble = countRepetitions(bitsToScramble)
-print("\nSekwencja przed scramblingiem: \n",Fore.CYAN + bitsToScramble)
-print("Bity zaklocajace stanowia ", Fore.RED + str(countProbabilityNew(bitsToScramble)), " % calej dlugosci sekwencji")
+print("\nPierwotna sekwencja: \n",Fore.CYAN + bitsToScramble)
+print(Fore.MAGENTA + "     Symulacja przesylania danych bez scramblingu    ")
+disturbedSeq = countProbabilityNew(bitsToScramble)
 
 plt.bar(list(toScramble.keys()), toScramble.values(), color='g')
 plt.show()
@@ -43,11 +45,11 @@ for bit in bitsToScramble:
 
 #Tworzenie stringa z tablicy bitów po scramblowaniu
 strScrambledBits = "".join(scrambledBits)
-#Wyświetl symulację desynchronizacji dla ciągu bitów po scramblowaniu
+#Wyświetl symulację desynchronizacji dla ciągu bitów z użyciem Scramblingu
+print(Fore.MAGENTA + "     Symulacja przesylania danych przy uzyciu scramblingu    ")
+print("Sekwencja poddana scramblingowi: ",Fore.CYAN + strScrambledBits)
 scrambled = countRepetitions(strScrambledBits)
-print("\nSekwencja po scramblingu \n",Fore.CYAN + strScrambledBits)
-print("Bity zaklocajace stanowia ", Fore.RED  + str(countProbabilityNew(strScrambledBits)), " % calej dlugosci sekwencji")
-
+disturbedSeqScr = countProbabilityNew(strScrambledBits)
 plt.bar(list(scrambled.keys()), scrambled.values(), color='g')
 plt.show()
 

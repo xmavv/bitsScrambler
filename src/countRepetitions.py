@@ -42,11 +42,15 @@ def countProbabilityNew(bits):
     packets.append(packet)
     #Sprawdzanie czy może wystąpić desynchronizacja bitów w każdym pakiecie
     disturbedBits = 0
+    disturbedSequence  = []
+    sequenceToPrint = []
     print("Pakiety: ",packets)
     for packet in packets:
         zeroSequenceCounter = 1
         disturbBits = False
         anySequences = False
+        newPacket = ""
+        packetToPrint = ""
         print("Pakiet: ",Fore.CYAN + packet)
         for i in range(len(packet)-1):
             if packet[i] == packet[i+1] and packet[i] == '0':
@@ -76,11 +80,30 @@ def countProbabilityNew(bits):
                 noise = len(packet) - i - 1
                 print("Powstal szum o dlugosci ", Fore.RED + str(noise), " bitow")
                 disturbedBits += noise
+                randomSequence = generate_sequence(noise) #Losowa sekwencja przypominająca szum
+                newPacket = packet[:i+1] + randomSequence #Zastępujemy zdesynchronizowany fragment pakietu losową sekwencją zer i jedynek
+                packetToPrint = Fore.CYAN + packet[:i+1] + Fore.RED + randomSequence
+                #disturbedSequence.append(newPacket)
+                print("Wizualizacja szumu w pakiecie: ",packetToPrint)
                 break
-        if not anySequences:
-            print(Fore.GREEN + "Brak sekwencji zer, ktore moga spowodowac desynchronizacje")
+            else:
+                newPacket = packet
+                packetToPrint = Fore.CYAN + packet
 
-    return round(disturbedBits / len(bits),2)*100 #Wynik w procentach zaokrąglony
+        if not anySequences:
+            disturbedSequence.append(packet)
+            sequenceToPrint.append(Fore.CYAN + packet)
+            print(Fore.GREEN + "Brak sekwencji zer, ktore moga spowodowac desynchronizacje")
+        else:
+            disturbedSequence.append(newPacket)
+            sequenceToPrint.append(packetToPrint)
+    print("Bity zaklocajace stanowia ", Fore.RED + str(round(disturbedBits / len(bits),2)*100), " % calej dlugosci sekwencji") #wyświetlanie wyniku w procentach zaokrąglony
+    print("Pierwotna sekwencja: ", Fore.CYAN + bits)
+    print("Zaklocona sekwencja: ","".join(sequenceToPrint))
+    print()
+
+    return "".join(disturbedSequence)
+
 
 #randomSequence = generate_sequence(200)
 
