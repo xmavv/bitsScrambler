@@ -1,6 +1,9 @@
 from config import *
 import random
 
+from colorama import Fore, Style, init
+init(autoreset=True) #inicjalizacja biblioteki colorama do kolorowego tekstu
+
 def generate_sequence(length):
     sequence = ''.join(random.choice(['0', '1']) for _ in range(length))
     return sequence
@@ -44,40 +47,43 @@ def countProbabilityNew(bits):
         zeroSequenceCounter = 1
         disturbBits = False
         anySequences = False
-        print("Pakiet: ",packet)
+        print("Pakiet: ",Fore.CYAN + packet)
         for i in range(len(packet)-1):
             if packet[i] == packet[i+1] and packet[i] == '0':
                 zeroSequenceCounter += 1
             elif zeroSequenceCounter >= MIN_DISTURBED_BITS:
                 anySequences = True
-                print("Znaleziono sekwencje zer o dlugosci: ",zeroSequenceCounter)
+                print("Znaleziono sekwencje zer o dlugosci: ",Fore.RED + str(zeroSequenceCounter))
                 #Jeśli długość sekwencji jest większa niż zakładane długości w tablicy prawdopodobieństwa to ustalamy, że na pewno wystąpi desynchronizacja
                 if zeroSequenceCounter > len(PROPABILITY_OF_DISRUPTION) + MIN_DISTURBED_BITS:
                     disturbBits = True
-                    print("Sekwencja jest bardzo dluga i na pewno wystapi desynchronizacja")
+                    print(Fore.YELLOW + "Sekwencja jest bardzo dluga i na pewno wystapi desynchronizacja")
                 #Jeśli długość sekwencji jest w tablicy prawdopodobieństwa to losujemy trafienie lub pudło dotyczące wystąpienia desynchronizacji
                 else:
                     propability = PROPABILITY_OF_DISRUPTION[zeroSequenceCounter - MIN_DISTURBED_BITS] #Pobranie prawd. dla danej dlugosci sekwencji
                     disturbBits = simulateHitOrMiss(propability)    #Losowanie wystapienia desynchronizacji danych
                     zeroSequenceCounter = 1
-                    print("Prawdopodobienstwo desynchronizacji to: ",propability)
-                    print("Czy wystapila desynchronizacja: ",disturbBits)
+                    print("Prawdopodobienstwo desynchronizacji to: ", Fore.YELLOW + str(propability*100), Fore.YELLOW + "%")
+                    if disturbBits:
+                        disturbMessage = Fore.RED + str(disturbBits)
+                    else:
+                        disturbMessage = Fore.GREEN + str(disturbBits)
+                    print("Czy wystapila desynchronizacja: ", disturbMessage)
             else:
                 zeroSequenceCounter = 1
 
             if (disturbBits):
                 noise = len(packet) - i - 1
-                print("Powstal szum o dlugosci ", noise, " bitow")
+                print("Powstal szum o dlugosci ", Fore.RED + str(noise), " bitow")
                 disturbedBits += noise
                 break
         if not anySequences:
-            print("Brak sekwencji zer, ktore moga spowodowac desynchronizacje")
+            print(Fore.GREEN + "Brak sekwencji zer, ktore moga spowodowac desynchronizacje")
 
-    return disturbedBits
+    return round(disturbedBits / len(bits),2)*100 #Wynik w procentach zaokrąglony
 
 #randomSequence = generate_sequence(200)
 
 #total = countPropabilityNew(randomSequence)
 #print(total)
-
 

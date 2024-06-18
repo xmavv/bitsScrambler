@@ -11,13 +11,16 @@ def xorBits(bit1, bit2):
         return '0'
     return '1'
 
-bitsToDescramble = "110111001"
-multiplicativeBits = [2,4] #To trzeba znać do descramblingu
-register = ['0','0','0','0','0'] #wyzerowany rejestr przed startem
+bitsToDescramble = "00111110010001101000111010100011110100111110001111001000110111010101111010001111001100000000000011100100101100101010101010101010101100111110110100110"
+bitsWithNoise =    "00111110010001101000111010100011110100111110001111001000110111010101111010001111001100000000000011011011010101001100100010101010101100111110110100110"
+#DANE DO DESCRAMBLINGU, muszą być takie same jak do scramblingu
+multiplicativeBits = [2,4]
+register = ['0','0','0','0','0']
 
-descrambledBits = []
+descrambledBits = []    #Tablica do bitów po descramblingu
 
-for bit in bitsToDescramble:
+#Algorytm descramblingu. Zobaczyć rysunek
+for bit in bitsWithNoise:
     xorA = xorBits(register[multiplicativeBits[0]], register[multiplicativeBits[1]])  # xorujemy bity w rejestrze na pozycjach zapisanych w multiplicativeBits
     xorB = xorBits(xorA, bit)  # xorujemy wynik pierwszego xorowania i kolejnego bitu do zakodowania
 
@@ -25,4 +28,6 @@ for bit in bitsToDescramble:
     descrambledBits.append(xorB)  # xorB to tez output
     register = moveRegister(bit,register)  # przesuwamy rejestr i dodajemy na początek rejestru bit, który wprowadziliśmy
 
-print(descrambledBits)
+#Tworzenie stringa z tablicy bitów po descramblowaniu
+strDescrambledBits = "".join(descrambledBits)
+print("Sekwencja po descramblowaniu ",strDescrambledBits)
