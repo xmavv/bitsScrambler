@@ -30,7 +30,7 @@ def load_wav_file():
 
 
 # save to the new WAV file
-def create_wav_file(data, channels=1, sample_width=2, frame_rate=44100, file_path='../samples/output/' + file_name + '_output_xd.wav'):
+def create_wav_file(data, channels=1, sample_width=2, frame_rate=44100, file_path='../samples/output/' + file_name + '_output.wav'):
     with wave.open(file_path, 'wb') as wav_file:
         wav_file.setnchannels(channels)
         wav_file.setsampwidth(sample_width)
@@ -45,7 +45,6 @@ def bytes_to_bits(byte_string):
 
 
 CIAG_BITOW = load_wav_file()  # to jest szesnastkowo tutaj bo lepiej to widac
-print(CIAG_BITOW[:100])
 
 # np. xff oznacza po prostu zapis szesnastkowy FF, czyli 1111 1111
 
@@ -61,21 +60,27 @@ def xorBits(bit1, bit2):
         return '0'
     return '1'
 
+#1. Plik oryginalny
+#2. Plik oryginalny z szumem
+#3. Plik scramblowany z szumem/bez
+#4. Plik descramblowany z szumem/bez
 
 bitsToScramble = CIAG_BITOW
 toScramble = countRepetitions(bitsToScramble)
+disturbedSequenceNoScrambling = countProbabilityNew(bitsToScramble)  #Sekwencja z szumem bez użycia scramblera
 
-plt.bar(list(toScramble.values()), toScramble.keys(), color='g')
-# plt.yticks(np.arange(min(toScramble.keys()),max(toScramble.keys())+1,1))
-# plt.xticks(np.arange(0,max(toScramble.values())+1,1))
-plt.xlabel("Ilość wystąpień długości danej sekwencji")
-plt.ylabel("Długość danej sekwencji zer")
+plt.bar(list(toScramble.keys()), toScramble.values(), color='g')
+#plt.yticks(np.arange(min(toScramble.values()),max(toScramble.values())+1,1))
+plt.xticks(np.arange(0,max(toScramble.keys())+1,10))
+plt.yscale("log")
+plt.ylabel("Ilość wystąpień długości danej sekwencji")
+plt.xlabel("Długość danej sekwencji zer")
 plt.title("Histogram wystąpień sekwencji zer | Przed scramblowaniem")
 plt.show()
 
 multiplicativeBits = [9, 15]  #Na tych dwóch pozycjach w rejestze xorujemy bity (licz od 0)
-register = ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0']  #wyzerowany rejestr przed startem
-
+#register = ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0']  #wyzerowany rejestr przed startem
+register = ['1', '1', '0', '0', '1', '0', '1', '0', '0', '0', '1', '1', '0', '0', '0', '1']
 scrambledBits = []
 
 #Zobaczyć rysunek żeby ogarnąć o co chodzi
@@ -88,20 +93,32 @@ for bit in bitsToScramble:
     register = moveRegister(xorB,
                             register)  #przesuwamy rejestr i dodajemy na początek rejestru bit, który wprowadziliśmy
 
-scrambled = countRepetitions("".join(scrambledBits))
+scrambled = countRepetitions("".join(scrambledBits))    #Słownik z długościami sekwencji zer po scramblowaniu
+disturbedSequenceScrambling = countProbabilityNew("".join(scrambledBits))   #Sekwencja z szumem z użyciem scramblera TRZEBA TO DESCRAMBLOWAĆ
 # disturbedSeqScr = countProbabilityNew("".join(scrambledBits))
-plt.bar(list(scrambled.values()), scrambled.keys(), color='g')
-# plt.yticks(np.arange(min(scrambled.keys()),max(scrambled.keys())+1,1))
-# plt.xticks(np.arange(0,max(scrambled.values())+1,1))
-plt.xlabel("Ilość wystąpień długości danej sekwencji")
-plt.ylabel("Długość danej sekwencji zer")
+#plt.bar(list(scrambled.values()), scrambled.keys(), color='g') #STARE
+plt.bar(list(scrambled.keys()), scrambled.values(), color='g')
+#plt.yticks(np.arange(min(scrambled.keys()),max(scrambled.keys())+1,1))
+#plt.xticks(np.arange(0,max(scrambled.values())+1,1))
+plt.xticks(np.arange(0,max(scrambled.keys())+10,10))
+plt.yscale("log")
+plt.ylabel("Ilość wystąpień długości danej sekwencji")
+plt.xlabel("Długość danej sekwencji zer")
+
 plt.title("Histogram wystąpień sekwencji zer | Po scramblowaniu")
 plt.show()
 
 bitsToDescramble = "".join(scrambledBits)
-multiplicativeBits = [9, 15]  #To trzeba znać do descramblingu
-register = ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0']  #wyzerowany rejestr przed startem
 
+
+
+#bitsToDescramble = disturbedSequenceScrambling  #descramblowanie sekwencji z szumem
+
+
+
+multiplicativeBits = [9, 15]  #To trzeba znać do descramblingu
+#register = ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0']  #wyzerowany rejestr przed startem
+register = ['1', '1', '0', '0', '1', '0', '1', '0', '0', '0', '1', '1', '0', '0', '0', '1']
 descrambledBits = []
 for bit in bitsToDescramble:
     xorA = xorBits(register[multiplicativeBits[0]], register[
@@ -120,7 +137,6 @@ def binary_to_hex(binary_string):
     hex_string = hex(integer_value)[2:]  # Pomijamy prefix '0x'
     return hex_string
 
-print("".join(descrambledBits)[:100])
 finalBits = binary_to_hex("".join(descrambledBits))
 finalByesObject = bytes.fromhex(finalBits)
 

@@ -60,7 +60,7 @@ def countProbabilityNew(bits):
                 anySequences = True
                 # print("Znaleziono sekwencje zer o dlugosci: ",Fore.RED + str(zeroSequenceCounter))
                 #Jeśli długość sekwencji jest większa niż zakładane długości w tablicy prawdopodobieństwa to ustalamy, że na pewno wystąpi desynchronizacja
-                if zeroSequenceCounter > len(PROPABILITY_OF_DISRUPTION) + MIN_DISTURBED_BITS:
+                if zeroSequenceCounter >= len(PROPABILITY_OF_DISRUPTION) + MIN_DISTURBED_BITS:
                     disturbBits = True
                     # print(Fore.YELLOW + "Sekwencja jest bardzo dluga i na pewno wystapi desynchronizacja")
                 #Jeśli długość sekwencji jest w tablicy prawdopodobieństwa to losujemy trafienie lub pudło dotyczące wystąpienia desynchronizacji
@@ -98,7 +98,7 @@ def countProbabilityNew(bits):
         else:
             disturbedSequence.append(newPacket)
             sequenceToPrint.append(packetToPrint)
-    # print("Bity zaklocajace stanowia ", Fore.RED + str(round(disturbedBits / len(bits),2)*100), " % calej dlugosci sekwencji") #wyświetlanie wyniku w procentach zaokrąglony
+    print("Bity zaklocajace stanowia ", Fore.RED + str(round(disturbedBits / len(bits),2)*100), " % calej dlugosci sekwencji") #wyświetlanie wyniku w procentach zaokrąglony
     # print("Pierwotna sekwencja: ", Fore.CYAN + bits)
     # print("Zaklocona sekwencja: ","".join(sequenceToPrint))
     # print()
