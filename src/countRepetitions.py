@@ -25,7 +25,7 @@ def countRepetitions(sequence):
     return countRep
 
 
-sequence = "001110000111110001101011010101101110000000000001010111111111110101010101011111111111110000000101101010101010101011111111111000000"
+# sequence = "001110000111110001101011010101101110000000000001010111111111110101010101011111111111110000000101101010101010101011111111111000000"
 
 def simulateHitOrMiss(propability):
     rand = random.random() #Generowanie losowej flaot liczby z przedziału 0 - 1
@@ -45,47 +45,47 @@ def countProbabilityNew(bits):
     disturbedBits = 0
     disturbedSequence  = []
     sequenceToPrint = []
-    print("Pakiety: ",packets)
+    # print("Pakiety: ",packets)
     for packet in packets:
         zeroSequenceCounter = 1
         disturbBits = False
         anySequences = False
         newPacket = ""
         packetToPrint = ""
-        print("Pakiet: ",Fore.CYAN + packet)
+        # print("Pakiet: ",Fore.CYAN + packet)
         for i in range(len(packet)-1):
             if packet[i] == packet[i+1] and packet[i] == '0':
                 zeroSequenceCounter += 1
             elif zeroSequenceCounter >= MIN_DISTURBED_BITS:
                 anySequences = True
-                print("Znaleziono sekwencje zer o dlugosci: ",Fore.RED + str(zeroSequenceCounter))
+                # print("Znaleziono sekwencje zer o dlugosci: ",Fore.RED + str(zeroSequenceCounter))
                 #Jeśli długość sekwencji jest większa niż zakładane długości w tablicy prawdopodobieństwa to ustalamy, że na pewno wystąpi desynchronizacja
                 if zeroSequenceCounter > len(PROPABILITY_OF_DISRUPTION) + MIN_DISTURBED_BITS:
                     disturbBits = True
-                    print(Fore.YELLOW + "Sekwencja jest bardzo dluga i na pewno wystapi desynchronizacja")
+                    # print(Fore.YELLOW + "Sekwencja jest bardzo dluga i na pewno wystapi desynchronizacja")
                 #Jeśli długość sekwencji jest w tablicy prawdopodobieństwa to losujemy trafienie lub pudło dotyczące wystąpienia desynchronizacji
                 else:
                     propability = PROPABILITY_OF_DISRUPTION[zeroSequenceCounter - MIN_DISTURBED_BITS] #Pobranie prawd. dla danej dlugosci sekwencji
                     disturbBits = simulateHitOrMiss(propability)    #Losowanie wystapienia desynchronizacji danych
                     zeroSequenceCounter = 1
-                    print("Prawdopodobienstwo desynchronizacji to: ", Fore.YELLOW + str(propability*100), Fore.YELLOW + "%")
+                    # print("Prawdopodobienstwo desynchronizacji to: ", Fore.YELLOW + str(propability*100), Fore.YELLOW + "%")
                     if disturbBits:
                         disturbMessage = Fore.RED + str(disturbBits)
                     else:
                         disturbMessage = Fore.GREEN + str(disturbBits)
-                    print("Czy wystapila desynchronizacja: ", disturbMessage)
+                    # print("Czy wystapila desynchronizacja: ", disturbMessage)
             else:
                 zeroSequenceCounter = 1
 
             if (disturbBits):
                 noise = len(packet) - i - 1
-                print("Powstal szum o dlugosci ", Fore.RED + str(noise), " bitow")
+                # print("Powstal szum o dlugosci ", Fore.RED + str(noise), " bitow")
                 disturbedBits += noise
                 randomSequence = generate_sequence(noise) #Losowa sekwencja przypominająca szum
                 newPacket = packet[:i+1] + randomSequence #Zastępujemy zdesynchronizowany fragment pakietu losową sekwencją zer i jedynek
                 packetToPrint = Fore.CYAN + packet[:i+1] + Fore.RED + randomSequence
                 #disturbedSequence.append(newPacket)
-                print("Wizualizacja szumu w pakiecie: ",packetToPrint)
+                # print("Wizualizacja szumu w pakiecie: ",packetToPrint)
                 break
             else:
                 newPacket = packet
@@ -94,14 +94,14 @@ def countProbabilityNew(bits):
         if not anySequences:
             disturbedSequence.append(packet)
             sequenceToPrint.append(Fore.CYAN + packet)
-            print(Fore.GREEN + "Brak sekwencji zer, ktore moga spowodowac desynchronizacje")
+            # print(Fore.GREEN + "Brak sekwencji zer, ktore moga spowodowac desynchronizacje")
         else:
             disturbedSequence.append(newPacket)
             sequenceToPrint.append(packetToPrint)
-    print("Bity zaklocajace stanowia ", Fore.RED + str(round(disturbedBits / len(bits),2)*100), " % calej dlugosci sekwencji") #wyświetlanie wyniku w procentach zaokrąglony
-    print("Pierwotna sekwencja: ", Fore.CYAN + bits)
-    print("Zaklocona sekwencja: ","".join(sequenceToPrint))
-    print()
+    # print("Bity zaklocajace stanowia ", Fore.RED + str(round(disturbedBits / len(bits),2)*100), " % calej dlugosci sekwencji") #wyświetlanie wyniku w procentach zaokrąglony
+    # print("Pierwotna sekwencja: ", Fore.CYAN + bits)
+    # print("Zaklocona sekwencja: ","".join(sequenceToPrint))
+    # print()
 
     return "".join(disturbedSequence)
 
