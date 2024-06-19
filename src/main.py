@@ -30,7 +30,7 @@ def load_wav_file():
 
 
 # save to the new WAV file
-def create_wav_file(data, channels=1, sample_width=2, frame_rate=44100, file_path='../samples/output/' + file_name + '_output.wav'):
+def create_wav_file(data, channels=1, sample_width=2, frame_rate=44100, file_path='../samples/output/' + file_name + 'gownojebane.wav'):
     with wave.open(file_path, 'wb') as wav_file:
         wav_file.setnchannels(channels)
         wav_file.setsampwidth(sample_width)
