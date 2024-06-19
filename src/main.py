@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 
 from countRepetitions import countRepetitions, countProbabilityNew
 
-file_path = '../samples/input/wow.wav'
-
+file_name = 'wow'
+file_path = '../samples/input/' + file_name + '.wav'
 
 def hex_to_binary(hex_string):
     # Konwertujemy łańcuch szesnastkowy na bajty
@@ -30,13 +30,12 @@ def load_wav_file():
 
 
 # save to the new WAV file
-def create_wav_file(data, channels=1, sample_width=2, frame_rate=44100, file_path='../samples/output/wow_output.wav'):
+def create_wav_file(data, channels=1, sample_width=2, frame_rate=44100, file_path='../samples/output/' + file_name + '_output_xd.wav'):
     with wave.open(file_path, 'wb') as wav_file:
         wav_file.setnchannels(channels)
         wav_file.setsampwidth(sample_width)
         wav_file.setframerate(frame_rate)
         wav_file.writeframes(data)  # actually save
-
 
 def bytes_to_bits(byte_string):
     bits = []
@@ -46,6 +45,7 @@ def bytes_to_bits(byte_string):
 
 
 CIAG_BITOW = load_wav_file()  # to jest szesnastkowo tutaj bo lepiej to widac
+print(CIAG_BITOW[:100])
 
 # np. xff oznacza po prostu zapis szesnastkowy FF, czyli 1111 1111
 
@@ -73,8 +73,8 @@ plt.ylabel("Długość danej sekwencji zer")
 plt.title("Histogram wystąpień sekwencji zer | Przed scramblowaniem")
 plt.show()
 
-multiplicativeBits = [2, 4]  #Na tych dwóch pozycjach w rejestze xorujemy bity (licz od 0)
-register = ['0', '0', '0', '0', '0']  #wyzerowany rejestr przed startem
+multiplicativeBits = [9, 15]  #Na tych dwóch pozycjach w rejestze xorujemy bity (licz od 0)
+register = ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0']  #wyzerowany rejestr przed startem
 
 scrambledBits = []
 
@@ -99,8 +99,8 @@ plt.title("Histogram wystąpień sekwencji zer | Po scramblowaniu")
 plt.show()
 
 bitsToDescramble = "".join(scrambledBits)
-multiplicativeBits = [2, 4]  #To trzeba znać do descramblingu
-register = ['0', '0', '0', '0', '0']  #wyzerowany rejestr przed startem
+multiplicativeBits = [9, 15]  #To trzeba znać do descramblingu
+register = ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0']  #wyzerowany rejestr przed startem
 
 descrambledBits = []
 for bit in bitsToDescramble:
@@ -120,7 +120,7 @@ def binary_to_hex(binary_string):
     hex_string = hex(integer_value)[2:]  # Pomijamy prefix '0x'
     return hex_string
 
-
+print("".join(descrambledBits)[:100])
 finalBits = binary_to_hex("".join(descrambledBits))
 finalByesObject = bytes.fromhex(finalBits)
 
