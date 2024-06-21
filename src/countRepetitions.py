@@ -98,7 +98,7 @@ def countProbabilityNew(bits):
         else:
             disturbedSequence.append(newPacket)
             sequenceToPrint.append(packetToPrint)
-    print("Bity zaklocajace stanowia ", Fore.RED + str(round(disturbedBits / len(bits),2)*100), " % calej dlugosci sekwencji") #wyświetlanie wyniku w procentach zaokrąglony
+    # print("Bity zaklocajace stanowia ", Fore.RED + str(round(disturbedBits / len(bits),2)*100), " % calej dlugosci sekwencji") #wyświetlanie wyniku w procentach zaokrąglony
     # print("Pierwotna sekwencja: ", Fore.CYAN + bits)
     # print("Zaklocona sekwencja: ","".join(sequenceToPrint))
     # print()

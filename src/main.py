@@ -28,9 +28,8 @@ def load_wav_file():
         print("Kompresja:", wav_file.getcompname())
         return hex_to_binary(wav_file.readframes(wav_file.getnframes()).hex())
 
-
 # save to the new WAV file
-def create_wav_file(data, channels=1, sample_width=2, frame_rate=44100, file_path='../samples/output/' + file_name + 'gownojebane.wav'):
+def create_wav_file(data, channels=1, sample_width=2, frame_rate=44100, file_path='../samples/output/' + file_name + '_output.wav'):
     with wave.open(file_path, 'wb') as wav_file:
         wav_file.setnchannels(channels)
         wav_file.setsampwidth(sample_width)
@@ -45,6 +44,7 @@ def bytes_to_bits(byte_string):
 
 
 CIAG_BITOW = load_wav_file()  # to jest szesnastkowo tutaj bo lepiej to widac
+print(len(CIAG_BITOW))
 
 # np. xff oznacza po prostu zapis szesnastkowy FF, czyli 1111 1111
 
@@ -100,7 +100,7 @@ disturbedSequenceScrambling = countProbabilityNew("".join(scrambledBits))   #Sek
 plt.bar(list(scrambled.keys()), scrambled.values(), color='g')
 #plt.yticks(np.arange(min(scrambled.keys()),max(scrambled.keys())+1,1))
 #plt.xticks(np.arange(0,max(scrambled.values())+1,1))
-plt.xticks(np.arange(0,max(scrambled.keys())+10,10))
+plt.xticks(np.arange(0,max(toScramble.keys())+10,10))
 plt.yscale("log")
 plt.ylabel("Ilość wystąpień długości danej sekwencji")
 plt.xlabel("Długość danej sekwencji zer")

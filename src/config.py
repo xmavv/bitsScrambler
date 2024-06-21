@@ -1,3 +1,3 @@
-MIN_DISTURBED_BITS = 10  #Minimalna długość sekwencji zer, po której może wystąpić zerwanie synchronizacji
-PACKET_LEN = 100        #Odstęp między bitami, po którym następuje automatyczna synchronizacja danych
+MIN_DISTURBED_BITS = 5  #Minimalna długość sekwencji zer, po której może wystąpić zerwanie synchronizacji
+PACKET_LEN = 40      #Odstęp między bitami, po którym następuje automatyczna synchronizacja danych
 PROPABILITY_OF_DISRUPTION = [0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1] #prawdopodobieństwo zerwania sygnału dla sekwencji zer, zaczynając od minimalnej niedopuszczalnej długości do kolejnych długości zwiększających się o 1

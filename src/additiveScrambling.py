@@ -11,7 +11,7 @@ def generate_sequence(length):
     return sequence
 
 # II metoda generowania - generowanie ciągu z rejestru
-def generate_lfsr_sequence(initial_state):
+def generate_lfsr_sequence(initial_state, bit_string):
     register = list(initial_state)  # generujemy rejestr z początkowym stanem initial_state
     generated_sequence = []  # tablica wynikowa
 
@@ -39,52 +39,53 @@ def scramble_bits(bit_string, random_sequence):
     return scrambled_bits
 
 # przykładowy ciąg do testów
-bit_string = "0100001101111000101011100101010001101010001010111111000101010"
-print("PRZED SCRAMBLINGIEM")
-print("Bity zaklocajace stanowia ", countProbabilityNew(bit_string), " % calej dlugosci sekwencji")
+# bit_string = "0100001101111000101011100101010001101010001010111111000101010"
+# print("PRZED SCRAMBLINGIEM")
+# print("Bity zaklocajace stanowia ", countProbabilityNew(bit_string), " % calej dlugosci sekwencji")
 
-toScramble = countRepetitions(bit_string)
-plt.bar(list(toScramble.keys()), toScramble.values(), color='g')
-plt.show()
+# toScramble = countRepetitions(bit_string)
+# plt.bar(list(toScramble.keys()), toScramble.values(), color='g')
+# plt.show()
 
-print("\nI METODA - random")
-print("Oryginalny ciąg bitów:                   ", bit_string)
+# print("\nI METODA - random")
+# print("Oryginalny ciąg bitów:                   ", bit_string)
 # generowanie ciągu losowego
-random_sequence = generate_sequence(len(bit_string))
-print("Ciąg losowy (random):                    ", random_sequence)
+# random_sequence = generate_sequence(len(bit_string))
+# print("Ciąg losowy (random):                    ", random_sequence)
 # scramblowanie
-scrambled_bit_string = scramble_bits(bit_string, random_sequence)
+# scrambled_bit_string = scramble_bits(bit_string, random_sequence)
+# print(type (scrambled_bit_string))
 # descramblowanie
-descrambled_bit_string = descramble_bits(scrambled_bit_string, random_sequence)
+# descrambled_bit_string = descramble_bits(scrambled_bit_string, random_sequence)
 # wyniki
-print("Ciąg bitów po scramblingu (random):      ", scrambled_bit_string) # pokaż pierwsze 100 bitów ciągu wyjściowego
-print("Ciąg bitów po descramblingu (random):    ", descrambled_bit_string) # pierwsze 100 bitów po descramblingu
+# print("Ciąg bitów po scramblingu (random):      ", scrambled_bit_string) # pokaż pierwsze 100 bitów ciągu wyjściowego
+# print("Ciąg bitów po descramblingu (random):    ", descrambled_bit_string) # pierwsze 100 bitów po descramblingu
+#
+# print("\nPO SCRAMBLINGU (random)")
+# print("Bity zaklocajace stanowia ", countProbabilityNew(scrambled_bit_string), " % calej dlugosci sekwencji")
 
-print("\nPO SCRAMBLINGU (random)")
-print("Bity zaklocajace stanowia ", countProbabilityNew(scrambled_bit_string), " % calej dlugosci sekwencji")
+# scrambled_rand = countRepetitions(scrambled_bit_string)
+# plt.bar(list(scrambled_rand.keys()), scrambled_rand.values(), color='g')
+# plt.show()
 
-scrambled_rand = countRepetitions(scrambled_bit_string)
-plt.bar(list(scrambled_rand.keys()), scrambled_rand.values(), color='g')
-plt.show()
-
-print("\nII METODA - LFSR")
-print("Oryginalny ciąg bitów:                   ", bit_string)
+# print("\nII METODA - LFSR")
+# print("Oryginalny ciąg bitów:                   ", bit_string)
 # stan początkowy dla LFSR
-initial_register = [1, 0, 0]
+# initial_register = [1, 0, 0]
 # generowanie ciągu z rejestru
-lfsr_sequence = generate_lfsr_sequence(initial_register)
-print("Ciąg z rejestru (LFSR):                  ", lfsr_sequence)
+# lfsr_sequence = generate_lfsr_sequence(initial_register)
+# print("Ciąg z rejestru (LFSR):                  ", lfsr_sequence)
 # scramblowanie
-lfsr_scrambled_bit_string = scramble_bits(bit_string, lfsr_sequence)  # Scramblowanie z LFSR
+# lfsr_scrambled_bit_string = scramble_bits(bit_string, lfsr_sequence)  # Scramblowanie z LFSR
 # descramblowanie
-descrambled_bit_string_lfsr = descramble_bits(lfsr_scrambled_bit_string, lfsr_sequence)
+# descrambled_bit_string_lfsr = descramble_bits(lfsr_scrambled_bit_string, lfsr_sequence)
 # wyniki
-print("Ciąg bitów po scramblingu (LFSR):        ", lfsr_scrambled_bit_string)
-print("Ciąg bitów po descramblingu (LFSR):      ", descrambled_bit_string_lfsr)
+# print("Ciąg bitów po scramblingu (LFSR):        ", lfsr_scrambled_bit_string)
+# print("Ciąg bitów po descramblingu (LFSR):      ", descrambled_bit_string_lfsr)
 
-print("\nPO SCRAMBLINGU (LFSR)")
-print("Bity zaklocajace stanowia ", countProbabilityNew(lfsr_scrambled_bit_string), " % calej dlugosci sekwencji")
+# print("\nPO SCRAMBLINGU (LFSR)")
+# print("Bity zaklocajace stanowia ", countProbabilityNew(lfsr_scrambled_bit_string), " % calej dlugosci sekwencji")
 
-scrambled_lfsr = countRepetitions(lfsr_scrambled_bit_string)
-plt.bar(list(scrambled_lfsr.keys()), scrambled_lfsr.values(), color='g')
-plt.show()
+# scrambled_lfsr = countRepetitions(lfsr_scrambled_bit_string)
+# plt.bar(list(scrambled_lfsr.keys()), scrambled_lfsr.values(), color='g')
+# plt.show()
