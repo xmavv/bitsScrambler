@@ -1,5 +1,10 @@
-1. wczytac dane od uzytkownika (plik audio)
-2. funkcje odpowiadajace za scrambling (addytywny oraz multiplkatywny)
-3. odsluch audio po scramblingu
-4. funkcja descramblingu
-5. wyswietlenie danych przed i po
+kod po bibliografi
+
+dodac do spisu tresci bibliografie
+
+12 font
+interlinia 1
+
+system liczbowy zamienic (w sensie gdzies w tekście jest inczej)
+
+wyrownanie wedlug przecinka w tabeli

@@ -33,7 +33,7 @@ def simulateHitOrMiss(propability):
         return True
     return False
 
-def countProbabilityNew(bits):
+def simulateTransfer(bits):
     packets = [] #pakiety danych, między którymi następuje synchronizacja
     #Tworzenie pakietów
     for i in range(0,len(bits) - PACKET_LEN ,PACKET_LEN):
