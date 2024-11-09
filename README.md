@@ -42,7 +42,7 @@ Multiplicative method works...
 
 working with our <i>wow.wav</i> file, which sounds like this and contains 1320848 single bits
 
-WOW.WAV FILE
+[WOW.WAV FILE](https://github.com/user-attachments/assets/6fb41b60-7df4-4842-a213-708f7f6b4893)
 
 ![zero sequences histogram before scrambling](img/before_scrambling.png)
 
@@ -58,11 +58,11 @@ after scrambling our file should be encrypted, and so it sounds like that
 
 (WARNING, LOUD NOISES)
 
-FILEAFTERSCRAMBLIG.WAV FILE
+[FILEAFTERSCRAMBLIG.WAV FILE](https://github.com/user-attachments/assets/86807408-4db8-4209-aae7-7f38468c97b6)
 
-next we descramble our string to get the actual data
+next we descramble our bits to get the actual data
 
-DESCRAMBLED FILE WITH NOISES
+[DESCRAMBLED FILE WITH NOISES](https://github.com/user-attachments/assets/39d291c8-b2c2-4a1c-b882-46503a251386)
 
 as u can hear our file is mostly audible, but with small noise
 
@@ -70,11 +70,11 @@ thats because we simulated desynchronization probability, when our zero sequence
 
 to compare it here the file WITHOUT SCRAMBLER, where the whole desynchronization probability was 11%
 
-BEZSCRAMBLERA FILE
+[BEZSCRAMBLERA FILE](https://github.com/user-attachments/assets/1a8851a4-c21a-4ff3-b1b1-e5fb45eeb004)
 
 of course if we didnt simulated any noise, our output file will be the same as the output
 
-CALUTKI FAJNY PLIK
+[CALUTKI FAJNY PLIK](https://github.com/user-attachments/assets/930ae02b-e00c-4e18-9962-13484d0021f3)
 
 ## Built with
 to run this app, You will need to download ffmpeg
